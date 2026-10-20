@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#160b12">
+  <title>Para mi pequeño lindito ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #160b12;
+      --night2: #24101b;
+      --wine: #7e1838;
+      --wine-light: #b84b6c;
+      --rose: #e8a0b4;
+      --paper: #fffaf7;
+      --ink: #57323e;
+      --muted: #d6b8c2;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; min-height: 100vh; min-height: 100dvh;
+      color: #fff7f8; font-family: "DM Sans", sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 0%, #542039 0%, transparent 52%),
+        radial-gradient(ellipse at 10% 90%, #32101f 0%, transparent 45%),
+        linear-gradient(155deg, var(--night2), var(--night));
+      overflow-x: hidden;
+    }
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    .sky { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .star {
+      position: absolute; color: #fff2f5; opacity: .7;
+      animation: twinkle 3s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: .25; transform: scale(.8); } to { opacity: .95; transform: scale(1.15); } }
+    .floating-heart {
+      position: absolute; bottom: -35px; color: #e8a0b4; opacity: .42;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(0); }
+      to { transform: translateY(-115vh) rotate(28deg); }
+    }
+    .screen {
+      position: relative; z-index: 1; min-height: 100vh; min-height: 100dvh;
+      padding: 28px 18px; display: flex; align-items: center; justify-content: center;
+    }
+    .lock-screen { width: 100%; max-width: 360px; text-align: center; animation: fadeUp .8s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .statusbar { display: flex; justify-content: space-between; align-items: center; color: #f5dce4; font-size: 12px; opacity: .9; }
+    .lock-label {
+      margin-top: 38px; font-size: 12px; text-transform: uppercase; letter-spacing: 3px;
+      color: #e8a0b4;
+    }
+    .clock {
+      font-family: "Playfair Display", Georgia, serif; font-size: clamp(60px, 16vw, 82px);
+      line-height: 1; margin: 12px 0 8px; letter-spacing: -2px; font-weight: 500;
+      text-shadow: 0 0 32px #d65d8640;
+    }
+    .date-line { color: #d8bac5; font-size: 13px; }
+    .lock-art { font-size: 48px; margin: 26px 0 16px; filter: drop-shadow(0 8px 20px #d3457030); }
+    .lock-title { font-family: "Playfair Display", Georgia, serif; font-size: 25px; font-weight: 500; margin: 0 0 7px; }
+    .lock-subtitle { color: #d2b4c0; font-size: 13px; line-height: 1.7; margin: 0 auto 22px; max-width: 290px; }
+    .dots { display: flex; justify-content: center; gap: 13px; margin: 18px 0 24px; }
+    .dot {
+      width: 12px; height: 12px; border-radius: 50%; border: 1px solid #e8a0b4;
+      background: transparent; transition: background .16s, transform .16s, box-shadow .16s;
+    }
+    .dot.filled { background: #e8a0b4; transform: scale(1.08); box-shadow: 0 0 12px #e8a0b470; }
+    .keypad {
+      width: min(100%, 270px); margin: 0 auto; display: grid;
+      grid-template-columns: repeat(3, 1fr); gap: 10px 18px;
+    }
+    .key {
+      border: 1px solid #f4dbe51b; border-radius: 50%; width: 66px; height: 66px;
+      justify-self: center; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      color: #fff6f8; background: #fff7fa0b; cursor: pointer;
+      transition: background .15s, transform .15s, border-color .15s;
+    }
+    .key:active { transform: scale(.93); background: #b84b6c50; }
+    .key .digit { font-size: 23px; line-height: 1.05; }
+    .key .letters { font-size: 8px; letter-spacing: 2px; color: #d6b8c2; margin-top: 3px; }
+    .key.utility { font-size: 20px; background: transparent; border-color: transparent; }
+    .key.empty { visibility: hidden; }
+    .keypad.shake { animation: shake .32s ease; }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-7px); } 50% { transform: translateX(7px); } 75% { transform: translateX(-4px); } }
+    .error { min-height: 22px; margin: 13px 0 0; color: #ffb7c8; font-size: 12px; }
+    .bottom-note { margin-top: 22px; color: #b999a5; font-size: 10px; letter-spacing: 2px; }
+    .transition-screen { text-align: center; width: 100%; max-width: 450px; }
+    .envelope-wrap { position: relative; width: 220px; height: 165px; margin: 30px auto 20px; perspective: 800px; }
+    .envelope {
+      position: absolute; inset: 25px 0 0; border-radius: 5px 5px 12px 12px;
+      background: linear-gradient(145deg, #a93256, #64132e);
+      box-shadow: 0 20px 55px #0005; overflow: hidden;
+    }
+    .envelope:before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(140deg, #c34c70, #7e1838);
+      clip-path: polygon(0 0, 50% 59%, 100% 0);
+      z-index: 3;
+    }
+    .envelope:after {
+      content: ""; position: absolute; inset: 0;
+      background: #9e2c50; clip-path: polygon(0 100%, 0 0, 50% 58%, 100% 0, 100% 100%);
+      z-index: 2;
+    }
+    .letter-peek {
+      position: absolute; left: 18px; right: 18px; top: 0; height: 115px;
+      background: var(--paper); border-radius: 5px; color: #8e3151;
+      display: grid; place-items: center; font-size: 30px;
+      transition: transform 1s ease; z-index: 1;
+    }
+    .flap {
+      position: absolute; top: 25px; left: 0; width: 0; height: 0;
+      border-left: 110px solid transparent; border-right: 110px solid transparent;
+      border-top: 82px solid #d05a7b; transform-origin: top center;
+      z-index: 4; transition: transform .8s ease;
+    }
+    .seal {
+      position: absolute; z-index: 5; width: 43px; height: 43px; border-radius: 50%;
+      left: calc(50% - 21.5px); top: 79px; background: #fff4f6; color: #8b2343;
+      display: grid; place-items: center; font-size: 20px; border: 1px solid #f0c6d2;
+      transition: opacity .3s ease;
+    }
+    .opening .flap { transform: rotateX(180deg); }
+    .opening .seal { opacity: 0; }
+    .opening .letter-peek { transform: translateY(-95px); }
+    .transition-title { font: 500 29px "Playfair Display", Georgia, serif; margin: 10px 0; }
+    .transition-copy { color: #d6b8c2; font-size: 13px; line-height: 1.7; }
+    .letter-layout { width: 100%; max-width: 760px; margin: auto; animation: fadeUp .9s ease both; }
+    .letter-head { text-align: center; margin-bottom: 22px; }
+    .eyebrow {
+      display: inline-block; border: 1px solid #e8a0b44d; color: #efb5c6;
+      border-radius: 100px; padding: 8px 13px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .letter-head h1 { font: 500 clamp(34px, 8vw, 48px) "Playfair Display", Georgia, serif; margin: 14px 0 7px; }
+    .letter-head p { color: #c5a4b1; font-size: 13px; margin: 0; }
+    .paper {
+      color: var(--ink); background: var(--paper); border-radius: 6px 22px 22px 6px;
+      padding: clamp(25px, 6vw, 55px); box-shadow: 0 20px 65px #0004;
+      position: relative; overflow-wrap: anywhere; border-left: 4px solid #b84b6c;
+    }
+    .paper:before {
+      content: "♡"; position: absolute; top: 12px; right: 18px; color: #d9a0b0;
+      font-size: 26px; opacity: .7;
+    }
+    .salutation { color: #8b2343; font: 500 26px "Playfair Display", Georgia, serif; margin: 0 0 22px; }
+    .letter-text { white-space: pre-line; font-size: 15px; line-height: 2; color: #63434e; }
+    .signature { text-align: right; color: #8b2343; font: italic 24px "Playfair Display", Georgia, serif; margin: 30px 0 0; }
+    .closing-hearts { text-align: center; margin-top: 25px; color: #a63355; letter-spacing: 9px; font-size: 23px; }
+    .photos-section { margin-top: 26px; }
+    .photos-title { font: 500 25px "Playfair Display", Georgia, serif; text-align: center; margin: 0 0 15px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .photo-card {
+      margin: 0; background: #fffaf7; padding: 8px 8px 13px; border-radius: 7px;
+      box-shadow: 0 10px 28px #0003; transform: rotate(-1deg);
+    }
+    .photo-card:nth-child(2n) { transform: rotate(1deg); }
+    .photo-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 3px; background: #ead7dc; }
+    .photo-card figcaption { color: #825365; font: italic 14px "Playfair Display", Georgia, serif; text-align: center; padding-top: 10px; }
+    .photo-help { text-align: center; font-size: 11px; color: #c7a6b3; line-height: 1.6; margin: 13px auto 0; max-width: 500px; }
+    .controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 22px auto 0; }
+    .pill-button {
+      border: 1px solid #e8a0b466; border-radius: 100px; background: #ffffff0b; color: #fbeaf0;
+      padding: 12px 17px; cursor: pointer; font-size: 12px; transition: background .2s;
+    }
+    .pill-button:hover { background: #b84b6c35; }
+    .end-note { text-align: center; color: #b999a5; font-size: 11px; letter-spacing: 1px; margin: 25px 0 4px; }
+    @media (max-width: 390px) {
+      .keypad { gap: 8px 11px; }
+      .key { width: 61px; height: 61px; }
+      .photo-grid { gap: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky" id="sky" aria-hidden="true"></div>
+
+  <main class="screen">
+    <!-- PANTALLA DE BLOQUEO -->
+    <section class="lock-screen" id="lockScreen">
+      <div class="statusbar">
+        <span id="statusTime">11:11</span>
+        <span>● ᯤ ▰</span>
+      </div>
+      <p class="lock-label">✦ una cartita para ti ✦</p>
+      <div class="clock" id="clock">11:11</div>
+      <div class="date-line" id="dateLine">Una noche especial para nosotros</div>
+      <div class="lock-art" aria-hidden="true">🌙 ❤️</div>
+      <h1 class="lock-title">Mi pequeño lindito</h1>
+      <p class="lock-subtitle">Tengo algo guardadito para ti.<br>Introduce la clave para descubrirlo, mi amor.</p>
+
+      <div class="dots" id="dots" aria-label="Código de seis dígitos">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+
+      <div class="keypad" id="keypad" aria-label="Teclado numérico">
+        <button class="key" type="button" data-digit="1"><span class="digit">1</span><span class="letters">&nbsp;</span></button>
+        <button class="key" type="button" data-digit="2"><span class="digit">2</span><span class="letters">ABC</span></button>
+        <button class="key" type="button" data-digit="3"><span class="digit">3</span><span class="letters">DEF</span></button>
+        <button class="key" type="button" data-digit="4"><span class="digit">4</span><span class="letters">GHI</span></button>
+        <button class="key" type="button" data-digit="5"><span class="digit">5</span><span class="letters">JKL</span></button>
+        <button class="key" type="button" data-digit="6"><span class="digit">6</span><span class="letters">MNO</span></button>
+        <button class="key" type="button" data-digit="7"><span class="digit">7</span><span class="letters">PQRS</span></button>
+        <button class="key" type="button" data-digit="8"><span class="digit">8</span><span class="letters">TUV</span></button>
+        <button class="key" type="button" data-digit="9"><span class="digit">9</span><span class="letters">WXYZ</span></button>
+        <button class="key utility empty" type="button" tabindex="-1" aria-hidden="true"></button>
+        <button class="key" type="button" data-digit="0"><span class="digit">0</span><span class="letters">&nbsp;</span></button>
+        <button class="key utility" type="button" id="deleteKey" aria-label="Borrar último dígito">⌫</button>
+      </div>
+      <p class="error" id="error" role="status" aria-live="polite"></p>
+      <p class="bottom-note">HECHO CON AMOR, SOLO PARA TI ♡</p>
+    </section>
+
+    <!-- TRANSICIÓN: SOBRE ANIMADO -->
+    <section class="transition-screen" id="transitionScreen" hidden>
+      <span class="eyebrow">un pedacito de mi corazón</span>
+      <div class="envelope-wrap" id="envelopeWrap" aria-hidden="true">
+        <div class="letter-peek">♡</div>
+        <div class="envelope"></div>
+        <div class="flap"></div>
+        <div class="seal">♥</div>
+      </div>
+      <h2 class="transition-title">Abriendo tu cartita...</h2>
+      <p class="transition-copy">Preparé estas palabras pensando en ti.<br>Espero que te abracen aunque esté lejos. ♡</p>
+    </section>
+
+    <!-- CARTA -->
+    <section class="letter-layout" id="letterScreen" hidden>
+      <header class="letter-head">
+        <span class="eyebrow">para ti, con todo mi amor</span>
+        <h1>Mi pequeño lindito</h1>
+        <p>Un mes más escribiendo nuestra historia. ♡</p>
+      </header>
+
+      <article class="paper">
+        <h2 class="salutation">Mi amor hermoso, ♡</h2>
+
+        <!-- PEGA TU CARTA ENTRE ESTAS ETIQUETAS -->
+        <div class="letter-text" id="letterText">AQUÍ PEGA TU CARTA COMPLETA.
+
+Puedes conservar los párrafos separándolos con una línea en blanco.</div>
+        <!-- FIN DEL TEXTO EDITABLE -->
+
+        <p class="signature">Con todo mi amor, siempre. ♡</p>
+        <div class="closing-hearts" aria-hidden="true">♡ ✦ ♥ ✦ ♡</div>
+      </article>
+
+      <section class="photos-section">
+        <h2 class="photos-title">Nuestros pequeños recuerdos</h2>
+        <div class="photo-grid">
+          <!-- CAMBIA fotos/foto1.jpg Y fotos/foto2.jpg POR TUS FOTOS -->
+          <figure class="photo-card">
+            <img src="fotos/foto1.jpg" alt="Un recuerdo bonito de nosotros" loading="lazy"
+              onerror="this.style.display='none'; this.nextElementSibling.textContent='Añade aquí nuestra primera foto ♡';">
+            <figcaption>Un recuerdo contigo ♡</figcaption>
+          </figure>
+          <figure class="photo-card">
+            <img src="fotos/foto2.jpg" alt="Otro recuerdo bonito de nosotros" loading="lazy"
+              onerror="this.style.display='none'; this.nextElementSibling.textContent='Añade aquí nuestra segunda foto ♡';">
+            <figcaption>Mi lugar favorito es contigo</figcaption>
+          </figure>
+        </div>
+        <p class="photo-help">Para añadir fotos, crea una carpeta llamada <b>fotos</b> junto a este archivo y coloca dentro tus imágenes con los nombres <b>foto1.jpg</b> y <b>foto2.jpg</b>. También puedes cambiar los nombres en el código.</p>
+      </section>
+
+      <div class="controls">
+        <button class="pill-button" type="button" id="musicButton">♫ Reproducir nuestra canción</button>
+        <button class="pill-button" type="button" id="backButton">Volver a la pantalla inicial ♡</button>
+      </div>
+      <p class="photo-help">Para usar tu canción, añade un archivo de audio llamado <b>cancion.mp3</b> a la carpeta del proyecto.</p>
+      <audio id="loveSong" src="cancion.mp3" preload="none" loop></audio>
+      <p class="end-note">HECHO CON AMOR, PARA MI PERSONA FAVORITA 🌙</p>
+    </section>
+  </main>
+
+  <script>
+    // NOTA: esta clave es un detalle romántico, no una barrera de seguridad real.
+    // En una web pública, el código fuente puede inspeccionarse.
+    const PASSCODE = "200526";
+    const CODE_LENGTH = 6;
+    let enteredCode = "";
+    let transitionTimer = null;
+
+    const lockScreen = document.getElementById("lockScreen");
+    const transitionScreen = document.getElementById("transitionScreen");
+    const letterScreen = document.getElementById("letterScreen");
+    const dots = [...document.querySelectorAll(".dot")];
+    const keypad = document.getElementById("keypad");
+    const error = document.getElementById("error");
+    const envelopeWrap = document.getElementById("envelopeWrap");
+    const musicButton = document.getElementById("musicButton");
+    const loveSong = document.getElementById("loveSong");
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit", hour12: false });
+      document.getElementById("clock").textContent = time;
+      document.getElementById("statusTime").textContent = time;
+      document.getElementById("dateLine").textContent = now.toLocaleDateString("es-PE", {
+        weekday: "long", day: "numeric", month: "long"
+      });
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    function updateDots() {
+      dots.forEach((dot, index) => dot.classList.toggle("filled", index < enteredCode.length));
+    }
+
+    function clearCode() {
+      enteredCode = "";
+      updateDots();
+    }
+
+    function enterDigit(digit) {
+      if (!/^\d$/.test(digit) || !letterScreen.hidden || !transitionScreen.hidden) return;
+      if (enteredCode.length >= CODE_LENGTH) return;
+
+      enteredCode += digit;
+      updateDots();
+      error.textContent = "";
+
+      if (enteredCode.length === CODE_LENGTH) {
+        if (enteredCode === PASSCODE) {
+          openLetter();
+        } else {
+          error.textContent = "Casi, mi amor. Inténtalo otra vez ♡";
+          keypad.classList.remove("shake");
+          void keypad.offsetWidth;
+          keypad.classList.add("shake");
+          window.setTimeout(() => {
+            clearCode();
+            keypad.classList.remove("shake");
+          }, 650);
+        }
+      }
+    }
+
+    function openLetter() {
+      lockScreen.hidden = true;
+      transitionScreen.hidden = false;
+      envelopeWrap.classList.remove("opening");
+      void envelopeWrap.offsetWidth;
+      window.setTimeout(() => envelopeWrap.classList.add("opening"), 120);
+      transitionTimer = window.setTimeout(() => {
+        transitionScreen.hidden = true;
+        letterScreen.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 1550);
+    }
+
+    document.querySelectorAll("[data-digit]").forEach(button => {
+      button.addEventListener("click", () => enterDigit(button.dataset.digit));
+    });
+
+    document.getElementById("deleteKey").addEventListener("click", () => {
+      enteredCode = enteredCode.slice(0, -1);
+      error.textContent = "";
+      updateDots();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (!lockScreen.hidden) {
+        if (/^\d$/.test(event.key)) enterDigit(event.key);
+        if (event.key === "Backspace") {
+          enteredCode = enteredCode.slice(0, -1);
+          updateDots();
+          error.textContent = "";
+        }
+      }
+    });
+
+    document.getElementById("backButton").addEventListener("click", () => {
+      if (transitionTimer) clearTimeout(transitionTimer);
+      loveSong.pause();
+      loveSong.currentTime = 0;
+      musicButton.textContent = "♫ Reproducir nuestra canción";
+      letterScreen.hidden = true;
+      transitionScreen.hidden = true;
+      lockScreen.hidden = false;
+      clearCode();
+      error.textContent = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    musicButton.addEventListener("click", async () => {
+      if (loveSong.paused) {
+        try {
+          await loveSong.play();
+          musicButton.textContent = "♫ Pausar nuestra canción";
+        } catch (err) {
+          musicButton.textContent = "No se encontró cancion.mp3";
+          error.textContent = "Añade cancion.mp3 a la carpeta del proyecto para escucharla.";
+        }
+      } else {
+        loveSong.pause();
+        musicButton.textContent = "♫ Reproducir nuestra canción";
+      }
+    });
+
+    loveSong.addEventListener("ended", () => {
+      musicButton.textContent = "♫ Reproducir nuestra canción";
+    });
+
+    // Crea estrellas y corazones decorativos.
+    const sky = document.getElementById("sky");
+    for (let i = 0; i < 42; i++) {
+      const star = document.createElement("span");
+      star.className = "star";
+      star.textContent = i % 5 === 0 ? "✦" : "·";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.fontSize = (8 + Math.random() * 12) + "px";
+      star.style.animationDelay = (-Math.random() * 4) + "s";
+      star.style.animationDuration = (2 + Math.random() * 4) + "s";
+      sky.appendChild(star);
+    }
+
+    const hearts = ["♡", "♥", "❤"];
+    for (let i = 0; i < 15; i++) {
+      const heart = document.createElement("span");
+      heart.className = "floating-heart";
+      heart.textContent = hearts[i % hearts.length];
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.fontSize = (12 + Math.random() * 17) + "px";
+      heart.style.animationDuration = (13 + Math.random() * 16) + "s";
+      heart.style.animationDelay = (-Math.random() * 25) + "s";
+      sky.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
